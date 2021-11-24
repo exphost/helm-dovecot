@@ -1,0 +1,16 @@
+---
+apiVersion: exphost.pl/v1
+kind: Template
+metadata:
+  name: dovecot-conf
+spec:
+  template: |
+    # todo
+  destination_name: dovecot-conf
+  destination_key: dovecot.conf
+  destination_type: Secret
+  values: []
+#    - name: bind_pw
+#      source_name: password-password-postfix-from-tenant-exphost-services
+#      source_type: Secret
+#      source_key: password
