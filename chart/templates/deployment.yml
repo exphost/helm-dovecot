@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dovecot
+  labels:
+    app: dovecot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dovecot
+  template:
+    metadata:
+      labels:
+        app: dovecot
+    spec:
+      containers:
+      - name: dovecot
+        image: {{ .Values.dovecot.image }}:{{ .Values.dovecot.tag }}
+        ports:
+        - containerPort: 143
+          name: imap
+        - containerPort: 993
+          name: imaps
+        volumeMounts:
+          - mountPath: /etc/dovecot/
+            name: dovecot-config
+            readOnly: true
+          - mountPath: /var/lib/vmail
+            name: vmail
+      volumes:
+        - name: dovecot-config
+          secret:
+            secretName: dovecot-conf
+        - name: vmail
+          persistentVolumeClaim:
+            claimName: postfix-vmail
