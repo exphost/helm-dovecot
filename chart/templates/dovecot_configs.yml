@@ -1,16 +1,50 @@
----
-apiVersion: exphost.pl/v1
-kind: Template
+apiVersion: v1
+kind: ConfigMap
 metadata:
   name: dovecot-conf
-spec:
-  template: |
-    # todo
-  destination_name: dovecot-conf
-  destination_key: dovecot.conf
-  destination_type: Secret
-  values: []
-#    - name: bind_pw
-#      source_name: password-password-postfix-from-tenant-exphost-services
-#      source_type: Secret
-#      source_key: password
+data:
+  dovecot.conf: |
+    # 2.3.15 (0503334ab1): /etc/dovecot/dovecot.conf
+    # Pigeonhole version 0.5.15 (e6a84e31)
+    # OS: Linux 5.14.18-300.fc35.x86_64 x86_64
+    # Hostname: fee040f9de2e
+    log_path = /dev/stdout
+    mail_debug = yes
+    managesieve_notify_capability = mailto
+    managesieve_sieve_capability = fileinto reject envelope encoded-character vacation subaddress comparator-i;ascii-numeric relational regex imap4flags copy include variables body enotify environment mailbox date index ihave duplicate mime foreverypart extracttext
+    mbox_write_locks = fcntl
+    namespace inbox {
+      inbox = yes
+      location =
+      mailbox Drafts {
+        special_use = \Drafts
+      }
+      mailbox Junk {
+        special_use = \Junk
+      }
+      mailbox Sent {
+        special_use = \Sent
+      }
+      mailbox "Sent Messages" {
+        special_use = \Sent
+      }
+      mailbox Trash {
+        special_use = \Trash
+      }
+      prefix =
+    }
+    passdb {
+      args = scheme=CRYPT username_format=%u /etc/dovecot/users
+      driver = passwd-file
+    }
+    plugin {
+      sieve = file:~/sieve;active=~/.dovecot.sieve
+    }
+    ssl = required
+    ssl_cert = </etc/ssl/dovecot/server.pem
+    ssl_key = </etc/ssl/dovecot/server.key
+    ssl_prefer_server_ciphers = yes
+    userdb {
+      args = username_format=%u /etc/dovecot/users
+      driver = passwd-file
+    }
