@@ -1,3 +1,6 @@
+ldap:
+  uri: ldap://example.com
+  base: dc=example,dc=com
 dovecot:
   image: registry.gitlab.exphost.pl/exphost/dovecot
   tag: v0.1.0
