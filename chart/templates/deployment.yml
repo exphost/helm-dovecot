@@ -30,8 +30,8 @@ spec:
             name: vmail
       volumes:
         - name: dovecot-config
-          secret:
-            secretName: dovecot-conf
+          configMap:
+            name: dovecot-conf
         - name: vmail
           persistentVolumeClaim:
             claimName: postfix-vmail
