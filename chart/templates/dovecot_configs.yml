@@ -52,6 +52,11 @@ data:
       args = /etc/dovecot/dovecot-ldap.conf.ext
       driver = ldap
     }
+    service auth {
+      inet_listener auth {
+        port = 5000
+      }
+    }
   dovecot-ldap.conf.ext: |
     uris = {{ .Values.ldap.uri }}
     auth_bind = yes
