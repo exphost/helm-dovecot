@@ -22,6 +22,8 @@ spec:
           name: imap
         - containerPort: 993
           name: imaps
+        - containerPort: 5000
+          name: auth
         volumeMounts:
           - mountPath: /etc/dovecot/
             name: dovecot-config
