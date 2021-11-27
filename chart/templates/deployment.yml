@@ -30,6 +30,9 @@ spec:
             readOnly: true
           - mountPath: /var/lib/vmail
             name: vmail
+          - mountPath: /etc/dovecot/ssl
+            name: ssl
+            readOnly: true
       volumes:
         - name: dovecot-config
           configMap:
@@ -37,3 +40,6 @@ spec:
         - name: vmail
           persistentVolumeClaim:
             claimName: postfix-vmail
+        - name: ssl
+          secret:
+            secretName: dovecot-ssl-cert

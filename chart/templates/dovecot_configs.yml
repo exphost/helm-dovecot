@@ -45,8 +45,8 @@ data:
       sieve = file:~/sieve;active=~/.dovecot.sieve
     }
     ssl = required
-    ssl_cert = </etc/ssl/dovecot/server.pem
-    ssl_key = </etc/ssl/dovecot/server.key
+    ssl_cert = </etc/dovecot/ssl/tls.crt
+    ssl_key = </etc/dovecot/ssl/tls.key
     ssl_prefer_server_ciphers = yes
     userdb {
       args = /etc/dovecot/dovecot-ldap.conf.ext
