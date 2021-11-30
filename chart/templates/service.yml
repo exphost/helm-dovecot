@@ -5,8 +5,10 @@ metadata:
   name: dovecot
   labels:
     app: dovecot
+  annotations:
+     metallb.universe.tf/allow-shared-ip: ingress-ip
 spec:
-  type: ClusterIP
+  type: LoadBalancer
   ports:
     - name: tcp-imap
       port: 143
