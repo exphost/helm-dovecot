@@ -7,6 +7,7 @@ metadata:
     app: dovecot
   annotations:
      metallb.universe.tf/allow-shared-ip: ingress-ip
+     external-dns.alpha.kubernetes.io/hostname: imap.{{ .Values.domain }}
 spec:
   type: LoadBalancer
   ports:
