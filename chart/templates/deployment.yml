@@ -24,6 +24,8 @@ spec:
           name: imaps
         - containerPort: 5000
           name: auth
+        - containerPort: 9900
+          name: metrics
         volumeMounts:
           - mountPath: /etc/dovecot/
             name: dovecot-config
