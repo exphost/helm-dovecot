@@ -1,3 +1,20 @@
 ---
 include:
   - https://gitlab.exphost.pl/exphost/exphost-helms/-/raw/master/common/gitlab-ci.yml
+
+stages:
+  - check
+  - upload
+  - deploy
+
+deploy-to-dev:
+  image: alpine
+  stage: deploy
+  extends: .deploy-to-git
+  environment:
+    name: dev
+  variables:
+    repo: git@gitlab.exphost.pl:exphost/tenant-exphost-services-home-lab.git
+    patch_cmd: |
+      values=$(yq e '.spec.source.helm.values' exphost-services.yml| yq e '.dovecot.version="'$$VERSION'"' -)
+      yq e -i '.spec.source.helm.values=strenv(values)' exphost-services.yml
