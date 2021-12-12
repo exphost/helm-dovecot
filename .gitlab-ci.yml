@@ -8,13 +8,12 @@ stages:
   - deploy
 
 deploy-to-dev:
-  image: alpine
   stage: deploy
-  extends: .deploy-to-git
+  extends: .deploy-to-git-subapp
   environment:
     name: dev
   variables:
     repo: git@gitlab.exphost.pl:exphost/tenant-exphost-services-home-lab.git
-    patch_cmd: |
-      values=$(yq e '.spec.source.helm.values' exphost-services.yml| yq e '.dovecot.version="'$$VERSION'"' -)
-      yq e -i '.spec.source.helm.values=strenv(values)' exphost-services.yml
+    yamlfile: exphost-services.yml
+    app: dovecot
+    waitapp: tenant-exphost-services-dovecot
